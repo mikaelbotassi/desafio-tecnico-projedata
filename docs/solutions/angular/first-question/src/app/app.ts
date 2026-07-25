@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from "@angular/core";
 import { PessoaService } from "./features/pessoa/services/pessoa.service";
 import { Subscription } from "rxjs";
 
@@ -6,11 +6,11 @@ import { Subscription } from "rxjs";
   selector: 'app-root',
   providers: [PessoaService],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<h1>{{ texto }}</h1>`,
+  template: `<h1>{{ texto() }}</h1>`,
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  texto: string = '';
+  texto = signal('');
   contador = 0;
 
   subscriptionBuscarPessoa?: Subscription;
@@ -24,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscriptionBuscarPessoa =
       this.pessoaService.buscarPorId(1).subscribe((pessoa) => {
 
-        this.texto = `Nome: ${pessoa.nome}`;
+        this.texto.set(`Nome: ${pessoa.nome}`);
 
       });
 
