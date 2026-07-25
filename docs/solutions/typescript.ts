@@ -28,3 +28,39 @@ class Verdureira {
     return produto.quantidadeEstoque > 0;
   }
 }
+
+/*
+ ## 1.2 Generics e Tipos Utilitários
+
+Implemente uma função genérica `filtrarEPaginar<T>` que recebe um array, um predicado de filtro e parâmetros de paginação (página e tamanho).
+
+A função deve retornar os itens da página atual e o total de registros filtrados.
+
+Utilize tipagem completa, **sem `any`**.
+*/
+
+class PaginaParams{
+  constructor(
+    public readonly pagina: number,
+    public readonly tamanho: number
+  ) {}
+}
+
+class Pagina<T>{
+  constructor(
+    public readonly itens: T[],
+    public readonly totalRegistros: number
+  ) {}
+}
+
+function filtrarEPaginar<T>(
+  data: T[],
+  filterFn: (item: T) => boolean,
+  params: PaginaParams
+): Pagina<T>{
+  const dados = data.filter(filterFn);
+  const inicio = (params.pagina - 1) * params.tamanho;
+  const fim = inicio + params.tamanho;
+  const paginatedItems = dados.slice(inicio, fim);
+  return new Pagina(paginatedItems, dados.length);
+}
