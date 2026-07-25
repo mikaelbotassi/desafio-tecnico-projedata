@@ -1,4 +1,3 @@
-/** Questão 1.1 */
 class Produto {
   constructor(
     public readonly id: number,
@@ -64,3 +63,15 @@ function filtrarEPaginar<T>(
   const paginatedItems = dados.slice(inicio, fim);
   return new Pagina(paginatedItems, dados.length);
 }
+
+// Exemplo de uso
+const produtos = [
+  new Produto(1, 'Maçã', 1),
+  new Produto(2, 'Mamão', 2),
+  new Produto(3, 'Manga', 3),
+  new Produto(4, 'Mexirica', 4)
+];
+
+const paginaParams = new PaginaParams(2, 2);
+const resultado = filtrarEPaginar(produtos, (p) => p.descricao.startsWith('M'), paginaParams);
+console.log(resultado.itens);
