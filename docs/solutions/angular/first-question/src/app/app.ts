@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from "@angular/core";
 import { PessoaService } from "./features/pessoa/services/pessoa.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,10 @@ import { PessoaService } from "./features/pessoa/services/pessoa.service";
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  texto: string;
+  texto: string = '';
   contador = 0;
 
-  subscriptionBuscarPessoa: Subscription;
+  subscriptionBuscarPessoa?: Subscription;
 
   constructor(
     private readonly pessoaService: PessoaService
