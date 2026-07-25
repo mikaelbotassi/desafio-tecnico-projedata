@@ -5,7 +5,10 @@
 // Exiba um indicador de loading enquanto a requisição está em andamento
 // Gerencie a subscription sem memory leak
 
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, Subject, Subscription } from 'rxjs';
+import { DebounceSearchService } from '../../services/debounce-search.service';
 
 @Component({
   selector: 'app-debounce-search',
@@ -13,4 +16,17 @@ import { Component } from '@angular/core';
   templateUrl: './debounce-search.html',
   styleUrl: './debounce-search.scss',
 })
-export class DebounceSearch {}
+export class DebounceSearch {
+
+  searchControl = new FormControl('');
+  subscription?: Subscription;
+  service = inject(DebounceSearchService);
+
+ngOnInit(): void {
+    this.subscription = this.searchControl.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged(),
+    ).;
+  }
+
+}

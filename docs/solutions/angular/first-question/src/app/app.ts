@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from "@angular/core";
 import { PessoaService } from "./features/pessoa/services/pessoa.service";
 import { combineLatest, map, Subscription, switchMap } from "rxjs";
+import { DebounceSearch } from "./features/debounce-search/components/debounce-search/debounce-search";
 
 @Component({
   selector: 'app-root',
   providers: [PessoaService],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<h1>{{ texto() }}</h1>`,
+  template: `<app-debounce-search></app-debounce-search>`,
+  imports: [DebounceSearch],
 })
 export class AppComponent implements OnInit, OnDestroy {
 
