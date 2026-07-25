@@ -27,4 +27,8 @@ export class PessoaService {
     return of({ id, nome: 'João' }).pipe(delay(500));
   }
 
+  buscarQuantidadeFamiliares(id: number) {
+    return of(5).pipe(delay(500));
+  }
+
 }
