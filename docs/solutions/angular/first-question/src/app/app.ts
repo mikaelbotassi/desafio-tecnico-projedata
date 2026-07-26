@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from "@angular/core";
 import { PessoaService } from "./features/pessoa/services/pessoa.service";
-import { combineLatest, map, Subscription, switchMap } from "rxjs";
-import { DebounceSearch } from "./features/debounce-search/components/debounce-search/debounce-search";
+import { map, Subscription, switchMap } from "rxjs";
+import { ContadorItemsCarrinho } from "./features/contador-items-carrinho/contador-items-carrinho";
 
 @Component({
   selector: 'app-root',
   providers: [PessoaService],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<app-debounce-search></app-debounce-search>`,
-  imports: [DebounceSearch],
+  template: `<app-contador-items-carrinho></app-contador-items-carrinho>`,
+  imports: [ContadorItemsCarrinho],
 })
 export class AppComponent implements OnInit, OnDestroy {
 
