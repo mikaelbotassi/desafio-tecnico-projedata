@@ -1,2 +1,32 @@
-<input type="text">
-<table></table>
+<input class="form-control" [formControl]="searchControl" placeholder="Search...">
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (loading$ | async) {
+            <tr>
+                <td colspan="2">
+                    Carregando...
+                </td>
+            </tr>
+        }@else if (error$ | async) {
+            <tr>
+                <td colspan="2">
+                    Erro ao carregar dados
+                </td>
+            </tr>
+        } @else {
+            @for (item of pessoas$ | async; track item.id) {
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+            </tr>
+            }
+        }
+    </tbody>
+</table>

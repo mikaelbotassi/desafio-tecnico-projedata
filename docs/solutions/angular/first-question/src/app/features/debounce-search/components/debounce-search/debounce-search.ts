@@ -1,32 +1,55 @@
-// 2.3. RxJS — busca com debounce
-// Implemente um campo de busca reativo em um componente Angular que:
-// Aguarde 500 ms após o usuário parar de digitar antes de disparar a requisição (debounce)
-// Cancele a requisição anterior caso o usuário digite novamente (evite race condition)
-// Exiba um indicador de loading enquanto a requisição está em andamento
-// Gerencie a subscription sem memory leak
+import { Component, inject } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  tap
+} from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
-import { Component, inject, signal } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, Subject, Subscription } from 'rxjs';
 import { DebounceSearchService } from '../../services/debounce-search.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 
 @Component({
   selector: 'app-debounce-search',
-  imports: [],
-  templateUrl: './debounce-search.html',
-  styleUrl: './debounce-search.scss',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    AsyncPipe
+  ],
+  templateUrl: './debounce-search.html'
 })
 export class DebounceSearch {
 
-  searchControl = new FormControl('');
-  subscription?: Subscription;
-  service = inject(DebounceSearchService);
+  private readonly service = inject(DebounceSearchService);
+  readonly searchControl = new FormControl('');
 
-ngOnInit(): void {
-    this.subscription = this.searchControl.valueChanges.pipe(
-      debounceTime(1000),
-      distinctUntilChanged(),
-    ).;
+  readonly pessoas$ = this.service.pessoas$;
+
+
+  readonly loading$ = this.service.loading$;
+
+
+  readonly error$ = this.service.error$;
+
+  constructor() {
+    this.searchControl.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap(value => {
+          if (!value) this.service.reset();
+        }),
+        filter(value => !!value),
+        switchMap(value => this.service.search(value!)),
+        takeUntilDestroyed()
+      )
+      .subscribe(result => {
+        this.service.updateResult(result);
+      });
   }
 
 }
