@@ -277,3 +277,18 @@ export class DebounceSearch {
 - **catchError():** trata erros da requisição sem quebrar o fluxo.
 - **finalize():** controla o estado de loading ao finalizar a requisição.
 - **takeUntilDestroyed():** garante o encerramento automático da subscription evitando memory leaks.
+## 2.4. Performance — OnPush e trackBy
+
+O `trackBy` ajuda o Angular a entender qual item da lista mudou usando uma identificação única, como o `id`, evitando que ele precise recriar todos os elementos da tela quando apenas um item foi alterado. Isso faz bastante diferença em listas grandes, pois diminui o trabalho que o Angular precisa fazer para atualizar a interface.
+
+O `ChangeDetectionStrategy.OnPush` também melhora a performance porque faz o Angular verificar o componente somente quando realmente existe alguma mudança, evitando verificações desnecessárias.
+
+Já utilizando a estratégia `Default`, o Angular faz uma checagem mais ampla sempre que algo muda na aplicação, o que pode gerar mais processamento e deixar a tela mais lenta quando temos muitos componentes ou uma lista com centenas de registros.
+
+Exemplo utilizando `trackBy`:
+
+```html
+@for (usuario of usuarios; track usuario.id) {
+  <p>{{ usuario.nome }}</p>
+}
+Nesse caso, o Angular utiliza o id de cada usuário para identificar os itens da lista e atualizar somente os elementos que realmente sofreram alguma alteração.
