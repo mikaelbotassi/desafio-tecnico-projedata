@@ -1,7 +1,7 @@
 export interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
+  readonly id: number;
+  readonly title: string;
+  readonly completed: boolean;
 }
 
 export interface TodoState {
