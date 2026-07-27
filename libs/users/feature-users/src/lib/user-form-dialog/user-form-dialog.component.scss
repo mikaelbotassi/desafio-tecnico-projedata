@@ -1,0 +1,44 @@
+:host {
+  display: block;
+}
+
+h2[mat-dialog-title] {
+  margin-bottom: 0;
+  font-weight: 750;
+}
+
+.dialog-description {
+  margin: 0 0 20px;
+  color: #64748b;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 16px;
+  min-width: min(560px, 76vw);
+  padding-top: 4px;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-dialog-actions {
+  padding: 12px 24px 20px;
+}
+
+@media (max-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    min-width: 0;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+}

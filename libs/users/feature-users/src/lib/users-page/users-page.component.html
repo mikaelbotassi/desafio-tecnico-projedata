@@ -1,0 +1,126 @@
+<section class="users-page">
+  @if (store.saving()) {
+    <mat-progress-bar mode="indeterminate" aria-label="Salvando usuário" />
+  }
+
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">Administração</span>
+      <h1>Usuários</h1>
+      <p>Consulte, cadastre e edite os usuários da plataforma.</p>
+    </div>
+
+    <button
+      mat-flat-button
+      type="button"
+      class="add-user-button"
+      (click)="createUser()"
+    >
+      <mat-icon>person_add</mat-icon>
+      Novo usuário
+    </button>
+  </header>
+
+  <section class="toolbar" aria-label="Filtros da listagem">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Buscar por nome</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+
+      <input
+        matInput
+        type="search"
+        [formControl]="searchControl"
+        placeholder="Ex.: Ana Souza"
+        autocomplete="off"
+      />
+
+      @if (searchControl.value) {
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          aria-label="Limpar busca"
+          (click)="clearSearch()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+
+    <div class="result-counter" aria-live="polite">
+      <strong>{{ store.totalFilteredUsers() }}</strong>
+      <span>
+        {{ store.totalFilteredUsers() === 1 ? 'usuário encontrado' : 'usuários encontrados' }}
+      </span>
+    </div>
+  </section>
+
+  @if (store.error()) {
+    <section class="error-state" role="alert">
+      <div class="state-icon state-icon--error">
+        <mat-icon>cloud_off</mat-icon>
+      </div>
+
+      <div>
+        <h2>Não foi possível carregar os usuários</h2>
+        <p>{{ store.error() }}</p>
+      </div>
+
+      <div class="error-state__actions">
+        <button mat-button type="button" (click)="store.clearError()">
+          Fechar
+        </button>
+        <button mat-flat-button type="button" (click)="retry()">
+          Tentar novamente
+        </button>
+      </div>
+    </section>
+  }
+
+  @if (store.loading()) {
+    <section class="loading-state" aria-live="polite">
+      <mat-spinner diameter="44" />
+      <strong>Carregando usuários...</strong>
+      <span>Aguarde enquanto consultamos os dados.</span>
+    </section>
+  } @else if (store.paginatedUsers().length > 0) {
+    <div class="users-grid">
+      @for (user of store.paginatedUsers(); track user.id) {
+        <attus-user-card
+          [user]="user"
+          (editRequested)="editUser($event)"
+        />
+      }
+    </div>
+
+    <mat-paginator
+      [length]="store.totalFilteredUsers()"
+      [pageIndex]="store.pageIndex()"
+      [pageSize]="store.pageSize()"
+      [pageSizeOptions]="pageSizeOptions"
+      showFirstLastButtons
+      aria-label="Paginação da lista de usuários"
+      (page)="pageChanged($event)"
+    />
+  } @else {
+    <section class="empty-state">
+      <div class="state-icon">
+        <mat-icon>person_search</mat-icon>
+      </div>
+
+      <h2>Nenhum usuário encontrado</h2>
+
+      @if (searchControl.value) {
+        <p>Não encontramos usuários com o nome pesquisado.</p>
+        <button mat-stroked-button type="button" (click)="clearSearch()">
+          Limpar busca
+        </button>
+      } @else {
+        <p>Cadastre o primeiro usuário para iniciar a listagem.</p>
+        <button mat-flat-button type="button" (click)="createUser()">
+          Cadastrar usuário
+        </button>
+      }
+    </section>
+  }
+</section>

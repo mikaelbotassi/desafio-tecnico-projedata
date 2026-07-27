@@ -1,0 +1,106 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.user-card {
+  height: 100%;
+  overflow: hidden;
+  border-color: #e3e6ec;
+  border-radius: 18px;
+  background: #ffffff;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease;
+}
+
+.user-card:hover {
+  transform: translateY(-2px);
+  border-color: #c8cfdb;
+  box-shadow: 0 12px 28px rgba(31, 41, 55, 0.1);
+}
+
+mat-card-header {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 20px 20px 12px;
+}
+
+.avatar {
+  display: grid;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 50%;
+  color: #ffffff;
+  background: linear-gradient(135deg, #334155, #0f172a);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.user-card__heading {
+  min-width: 0;
+}
+
+mat-card-title,
+mat-card-subtitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+mat-card-title {
+  margin-bottom: 4px;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+mat-card-subtitle {
+  color: #64748b;
+}
+
+mat-card-content {
+  padding: 12px 20px 4px;
+}
+
+.user-details {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.user-details div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.user-details div:last-child {
+  border-bottom: 0;
+}
+
+.user-details dt {
+  color: #64748b;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.user-details dd {
+  margin: 0;
+  color: #1f2937;
+  font-weight: 600;
+  text-align: right;
+}
+
+mat-card-actions {
+  padding: 8px 12px 12px;
+}

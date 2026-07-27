@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "strict": false,
-    "paths": {}
+    "paths": {
+      "@attus/users-data-access": [
+        "./libs/users/data-access-users/src/index.ts"
+      ],
+      "@attus/users-feature": ["./libs/users/feature-users/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

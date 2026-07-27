@@ -23,6 +23,15 @@
       "cpf": "45678912300",
       "phone": "27988887777",
       "phoneType": "CELULAR"
+    },
+    {
+      "name": "Mikael Botassi de Oliveira",
+      "email": "mbotassi@elfsm.com.br",
+      "cpf": "17293467745",
+      "phone": "27999667423",
+      "phoneType": "MOBILE",
+      "id": "M1fH9prQl14"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

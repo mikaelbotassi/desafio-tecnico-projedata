@@ -2,7 +2,15 @@
   "name": "@desafio-tecnico-projedata/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "nx serve users-app",
+    "api": "json-server db.json --port 3000",
+    "build": "nx build users-app",
+    "lint": "nx run-many -t lint",
+    "test": "nx run-many -t test",
+    "test:coverage": "nx run-many -t test --coverage",
+    "graph": "nx graph"
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "~21.2.18",
@@ -16,6 +24,8 @@
     "rxjs": "~7.8.0"
   },
   "devDependencies": {
+    "@analogjs/vite-plugin-angular": "~2.1.2",
+    "@analogjs/vitest-angular": "~2.1.2",
     "@angular-devkit/core": "~21.2.19",
     "@angular-devkit/schematics": "~21.2.19",
     "@angular/build": "~21.2.19",
@@ -28,20 +38,31 @@
     "@nx/eslint": "22.7.7",
     "@nx/eslint-plugin": "22.7.7",
     "@nx/js": "22.7.7",
+    "@nx/vite": "22.7.7",
+    "@nx/vitest": "22.7.7",
     "@nx/web": "22.7.7",
     "@nx/workspace": "22.7.7",
+    "@oxc-project/runtime": "^0.115.0",
     "@schematics/angular": "~21.2.19",
+    "@swc-node/register": "~1.11.1",
+    "@swc/core": "~1.15.5",
     "@swc/helpers": "~0.5.18",
+    "@types/node": "20.19.9",
     "@typescript-eslint/utils": "^8.58.0",
+    "@vitest/coverage-v8": "~4.1.0",
+    "@vitest/ui": "~4.1.0",
     "angular-eslint": "^21.4.0",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
+    "jsdom": "^27.1.0",
     "json-server": "^1.0.0-beta.15",
     "nx": "22.7.7",
     "prettier": "~3.6.2",
     "tslib": "^2.3.0",
     "typescript": "~5.9.0",
-    "typescript-eslint": "^8.58.0"
+    "typescript-eslint": "^8.58.0",
+    "vite": "^8.0.0",
+    "vitest": "~4.1.0"
   },
   "allowScripts": {
     "less@4.5.1": true,
