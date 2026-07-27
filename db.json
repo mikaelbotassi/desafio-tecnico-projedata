@@ -4,7 +4,7 @@
       "id": "1",
       "name": "Giana Sandrini",
       "email": "giana@attus.com.br",
-      "cpf": "12345678901",
+      "cpf": "22321353066",
       "phone": "27999999999",
       "phoneType": "MOBILE"
     },
@@ -12,7 +12,7 @@
       "id": "2",
       "name": "Carlos Oliveira",
       "email": "carlos@attus.com.br",
-      "cpf": "98765432100",
+      "cpf": "57784639015",
       "phone": "2733334444",
       "phoneType": "HOME"
     },
@@ -20,7 +20,7 @@
       "id": "3",
       "name": "Mariana Souza",
       "email": "mariana@attus.com.br",
-      "cpf": "45678912300",
+      "cpf": "35829949024",
       "phone": "27988887777",
       "phoneType": "MOBILE"
     }

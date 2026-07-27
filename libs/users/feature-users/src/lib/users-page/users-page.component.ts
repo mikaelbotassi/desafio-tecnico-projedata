@@ -62,7 +62,7 @@ export class UsersPageComponent {
   private readonly snackBar = inject(MatSnackBar);
 
   readonly store = inject(UsersStore);
-  readonly pageSizeOptions = [6, 12, 24];
+  readonly pageSizeOptions = [2, 6, 12, 24];
   readonly searchControl = new FormControl('', { nonNullable: true });
 
   constructor() {
