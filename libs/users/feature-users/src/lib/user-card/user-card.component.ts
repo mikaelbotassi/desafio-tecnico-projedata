@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgxMaskPipe } from 'ngx-mask';
 
 import {
-  PHONE_TYPE_OPTIONS,
+  PhoneType,
   User,
 } from '@attus/users-data-access';
 
@@ -44,8 +44,8 @@ export class UserCardComponent {
 
   readonly phoneTypeLabel = computed(
     () =>
-      PHONE_TYPE_OPTIONS.find(
-        (option) => option.value === this.user().phoneType,
+      PhoneType.values.find(
+        (option) => option === this.user().phoneType,
       )?.label ?? 'Telefone',
   );
 

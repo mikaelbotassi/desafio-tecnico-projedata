@@ -79,18 +79,13 @@ function getErrorMessage(error: unknown): string {
 
 export const UsersStore = signalStore(
   withState(initialState),
-
   withComputed(({ users, searchTerm }) => ({
     filteredUsers: computed(() => {
       const term = normalizeText(searchTerm());
 
-      if (!term) {
-        return users();
-      }
+      if (!term) return users();
 
-      return users().filter((user) =>
-        normalizeText(user.name).includes(term),
-      );
+      return users().filter((user) => normalizeText(user.name).includes(term));
     }),
     totalUsers: computed(() => users().length),
   })),

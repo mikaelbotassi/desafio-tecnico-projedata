@@ -1,51 +1,51 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { SchemaPath, validate } from '@angular/forms/signals';
 
 function onlyDigits(value: unknown): string {
   return String(value ?? '').replace(/\D/g, '');
 }
 
-export const cpfValidator: ValidatorFn = (
-  control: AbstractControl,
-): ValidationErrors | null => {
-  const cpf = onlyDigits(control.value);
+export function cpfValidator(path: SchemaPath<string>):void {
+  validate(path, ({ value }) => {
+    const cpfError = {
+      kind: 'cpfError',
+      message: 'Digite um CPF válido'
+    };
 
-  if (!cpf) {
-    return null;
-  }
+    const cpf = onlyDigits(value());
 
-  if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
-    return { cpf: true };
-  }
+    if (!cpf) return null;
 
-  const calculateDigit = (length: number): number => {
-    let sum = 0;
+    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return cpfError;
 
-    for (let index = 0; index < length; index += 1) {
-      sum += Number(cpf[index]) * (length + 1 - index);
-    }
+    const calculateDigit = (length: number): number => {
+      let sum = 0;
 
-    const remainder = (sum * 10) % 11;
-    return remainder === 10 ? 0 : remainder;
-  };
+      for (let index = 0; index < length; index += 1) {
+        sum += Number(cpf[index]) * (length + 1 - index);
+      }
 
-  const firstDigit = calculateDigit(9);
-  const secondDigit = calculateDigit(10);
+      const remainder = (sum * 10) % 11;
+      return remainder === 10 ? 0 : remainder;
+    };
 
-  return firstDigit === Number(cpf[9]) && secondDigit === Number(cpf[10])
-    ? null
-    : { cpf: true };
-};
+    const firstDigit = calculateDigit(9);
+    const secondDigit = calculateDigit(10);
 
-export const phoneValidator: ValidatorFn = (
-  control: AbstractControl,
-): ValidationErrors | null => {
-  const phone = onlyDigits(control.value);
+    return firstDigit === Number(cpf[9]) && secondDigit === Number(cpf[10])
+      ? null
+      : cpfError;
+  });
+}
 
-  if (!phone) {
-    return null;
-  }
+export const phoneValidator = (path:SchemaPath<string>): void => {
+  validate(path, ({value}) => {
+    const phone = onlyDigits(value());
 
-  return phone.length === 10 || phone.length === 11
-    ? null
-    : { phone: true };
+    if (!phone) return null;
+
+    return phone.length === 10 || phone.length === 11
+      ? null
+      : { kind:'phoneError', message: 'Digite um número de telefone válido' };
+    });
 };

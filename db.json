@@ -6,7 +6,7 @@
       "email": "giana@attus.com.br",
       "cpf": "12345678901",
       "phone": "27999999999",
-      "phoneType": "CELULAR"
+      "phoneType": "MOBILE"
     },
     {
       "id": "2",
@@ -14,7 +14,7 @@
       "email": "carlos@attus.com.br",
       "cpf": "98765432100",
       "phone": "2733334444",
-      "phoneType": "RESIDENCIAL"
+      "phoneType": "HOME"
     },
     {
       "id": "3",
@@ -22,15 +22,7 @@
       "email": "mariana@attus.com.br",
       "cpf": "45678912300",
       "phone": "27988887777",
-      "phoneType": "CELULAR"
-    },
-    {
-      "name": "Mikael Botassi de Oliveira",
-      "email": "mbotassi@elfsm.com.br",
-      "cpf": "17293467745",
-      "phone": "27999667423",
-      "phoneType": "MOBILE",
-      "id": "M1fH9prQl14"
+      "phoneType": "MOBILE"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
