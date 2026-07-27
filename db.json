@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Giana Sandrini",
+      "email": "giana@attus.com.br",
+      "cpf": "12345678901",
+      "phone": "27999999999",
+      "phoneType": "CELULAR"
+    },
+    {
+      "id": "2",
+      "name": "Carlos Oliveira",
+      "email": "carlos@attus.com.br",
+      "cpf": "98765432100",
+      "phone": "2733334444",
+      "phoneType": "RESIDENCIAL"
+    },
+    {
+      "id": "3",
+      "name": "Mariana Souza",
+      "email": "mariana@attus.com.br",
+      "cpf": "45678912300",
+      "phone": "27988887777",
+      "phoneType": "CELULAR"
+    }
+  ]
+}
