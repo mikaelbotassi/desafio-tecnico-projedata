@@ -1,30 +1,41 @@
-import { Injectable } from "@angular/core";
+import { HttpErrorResponse } from "@angular/common/http";
+import { inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { loadTodos, loadTodosError, loadTodosSuccess } from "./todo.actions";
-import { catchError, map, mergeMap, of } from "rxjs";
-import { TodoService } from "../services/todo.service";
+import { TodosApiService } from "../services/todo.service";
+import { TodosApiActions, TodosPageActions } from "./todo.actions";
+import { catchError, exhaustMap, map, of } from "rxjs";
 
-@Injectable()
-export class TodoEffects {
+const getErrorMessage = (error: unknown): string => {
+  if (error instanceof HttpErrorResponse) {
+    if (
+      typeof error.error === 'object' &&
+      error.error !== null &&
+      'message' in error.error
+    ) {
+      return String(error.error.message);
+    }
 
-  readonly loadTodos$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadTodos),
-      mergeMap(() =>
-        this.todoService.getTodos().pipe(
-          map(todos => loadTodosSuccess({ todos })),
-          catchError(error =>
-            of(loadTodosError({error: error.message}))
-          )
-        )
-      )
-    )
-  );
+    return error.message ||
+      `Erro HTTP ${error.status}`;
+  }
 
+  if (error instanceof Error) {
+    return error.message;
+  }
 
-  constructor(
-    private readonly actions$: Actions,
-    private readonly todoService: TodoService
-  ) {}
-
+  return 'Não foi possível carregar as tarefas.';
 }
+
+export const loadTodosEffect = createEffect((
+  actions$ = inject(Actions),
+  service = inject(TodosApiService)
+) => actions$.pipe(
+    ofType(TodosPageActions.loadTodos),
+    //Impedir várias requisições concorrentes
+    exhaustMap(() => service.getTodos().pipe(
+      map((todos) => TodosApiActions.loadTodosSuccess({todos})),
+      catchError((error:unknown) => of(TodosApiActions.loadTodosError({
+        error: getErrorMessage(error)
+      })))
+    ))
+  ), {functional:true});

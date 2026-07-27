@@ -1,14 +1,10 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { TodoState } from '../models/todo.model';
-import { todoFeature } from './todo.feature';
+import { createSelector } from "@ngrx/store";
+import { todosFeature } from "./todo.reducer";
 
-export const {
-  selectTodos,
-  selectLoading,
-  selectError
-} = todoFeature;
-
+export const selectAllTodos = todosFeature.selectTodos;
 export const selectPendingTodos = createSelector(
-  selectTodos,
-  todos => todos.filter(todo => !todo.completed)
+  selectAllTodos,
+  (todos)=>todos.filter((t)=>!t.completed)
 );
+export const selectError = todosFeature.selectError
+export const selectLoading = todosFeature.selectLoading
