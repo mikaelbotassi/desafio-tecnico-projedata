@@ -1,0 +1,47 @@
+<h2>Lista de Tarefas</h2>
+
+@if (loading$ | async) {
+
+<p>Carregando tarefas...</p>
+
+}
+@else if (error$ | async; as error) {
+
+<p>{{ error }}</p>
+
+}
+@else {
+
+<ul>
+
+    @for (todo of (todos$ | async); track todo.id) {
+
+    <li>
+
+        <input
+            type="checkbox"
+            [checked]="todo.completed"
+            (change)="toggleComplete(todo.id)"
+        />
+
+        {{ todo.title }}
+
+    </li>
+
+    }
+
+</ul>
+
+<h3>Tarefas Pendentes</h3>
+
+<ul>
+
+    @for (todo of (pendingTodos$ | async); track todo.id) {
+
+    <li>{{ todo.title }}</li>
+
+    }
+
+</ul>
+
+}
